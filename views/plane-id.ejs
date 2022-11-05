@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div>
+      <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">
+            <img
+              src="https://cdn.dribbble.com/users/60166/screenshots/10872300/media/ba277eb11fa7c7b2e3014d0f9a0ada71.jpeg"
+              alt="Logo"
+              width="40"
+              height="32"
+              class="d-inline-block align-text-top"
+            />
+            Flight Planner
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div
+            class="collapse navbar-collapse justify-content-end"
+            id="navbarNavAltMarkup"
+          >
+            <div
+              class="navbar-nav align-items-center"
+              style="width: fit-content"
+            >
+              <a class="nav-link" href="#">Airports</a>
+              <a class="nav-link active" href="/plane">Planes</a>
+              <a class="nav-link" href="/flight">Flights</a>
+              <a class="btn btn-sm btn-outline-secondary" href="/login"
+                >Login</a
+              >
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/plane">Plane</a></li>
+            <li class="breadcrumb-item active" aria-current="page">
+              <%= plane.id %>
+            </li>
+          </ol>
+        </nav>
+      </div>
+
+      <div class="container-fluid">
+        <div class="container-fluid">
+          <h5 class="mb-4">Plane Details</h5>
+
+          <div class="row mb-3">
+            <div class="col">
+              <h6>Plane Make</h6>
+              <div class="card-body"><%= plane.make %></div>
+            </div>
+            <div class="col">
+              <h6>Plane Model</h6>
+              <div class="card-body"><%= plane.model %></div>
+            </div>
+            <div class="col">
+              <h6>Plane Year</h6>
+              <div class="card-body"><%= plane.year %></div>
+            </div>
+            <div class="col">
+              <h6>Plane Capacity</h6>
+              <div class="card-body"><%= plane.capacity %></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+      integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

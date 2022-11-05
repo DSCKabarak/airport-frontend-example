@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flight</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body>
+    <div>
+      <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">
+            <img
+              src="https://cdn.dribbble.com/users/60166/screenshots/10872300/media/ba277eb11fa7c7b2e3014d0f9a0ada71.jpeg"
+              alt="Logo"
+              width="40"
+              height="32"
+              class="d-inline-block align-text-top"
+            />
+            Flight Planner
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div
+            class="collapse navbar-collapse justify-content-end"
+            id="navbarNavAltMarkup"
+          >
+            <div
+              class="navbar-nav align-items-center"
+              style="width: fit-content"
+            >
+              <a class="nav-link" href="/airport">Airports</a>
+              <a class="nav-link" href="/plane">Planes</a>
+              <a class="nav-link active" href="/flight">Flights</a>
+              <a class="btn btn-sm btn-outline-secondary" href="/login"
+                >Login</a
+              >
+            </div>
+          </div>
+        </div>
+      </nav>
+      <main class="container-fluid">
+        <div class="container-fluid mb-5">
+          <!-- Button trigger modal -->
+          <button
+            type="button"
+            class="btn btn-primary mt-4"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          >
+            Create Flight
+          </button>
+
+          <div
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <form
+                class="needs-validation"
+                novalidate
+                action="/flight"
+                method="POST"
+              >
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                      Create Flight
+                    </h1>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="mb-3">
+                      <label for="plane_id" class="form-label">Plane</label>
+                      <select
+                        class="form-select"
+                        name="plane_id"
+                        aria-label="Default select example"
+                        required
+                      >
+                        <% planes.forEach(function(plane){ %>
+                        <option value="<%= plane.id %>">
+                          <%= plane.make %>
+                        </option>
+                        <% }) %>
+                      </select>
+                      <div class="invalid-feedback">Please Select Plane!</div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="airportfrom_id" class="form-label"
+                        >Airport From</label
+                      >
+                      <select
+                        class="form-select"
+                        name="airportfrom_id"
+                        aria-label="Default select example"
+                        required
+                      >
+                        <% airports.forEach(function(airport){ %>
+                        <option value="<%= airport.id %>">
+                          <%= airport.airportname %>
+                        </option>
+                        <% }) %>
+                      </select>
+                      <div class="invalid-feedback">Please Select Origin!</div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="airportto_id" class="form-label"
+                        >Airport To</label
+                      >
+                      <select
+                        class="form-select"
+                        name="airportto_id"
+                        aria-label="Default select example"
+                        required
+                      >
+                        <% airports.forEach(function(airport){ %>
+                        <option value="<%= airport.id %>">
+                          <%= airport.airportname %>
+                        </option>
+                        <% }) %>
+                      </select>
+                      <div class="invalid-feedback">
+                        Please Select Destination!
+                      </div>
+                    </div>
+                    <div class="mb-4">
+                      <label for="country" class="form-label">Date</label>
+                      <input
+                        type="string"
+                        name="date"
+                        class="form-control"
+                        id="date"
+                        required
+                      />
+                      <div class="invalid-feedback">Please Provide Date!</div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid">
+          <h5 class="mb-4">Flights</h5>
+          <table class="table table-hover">
+            <thead class="table-light">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Plane Name</th>
+                <th scope="col">Airport From</th>
+                <th scope="col">Airport To</th>
+                <th scope="col">Date</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% flights.forEach(function(flight){ %>
+              <tr>
+                <th scope="row"><%= flight.id %></th>
+                <td>
+                  <%= planes.find((plane) => plane.id ===
+                  flight.airportfrom_id)?.make %>
+                </td>
+                <td>
+                  <%= airports.find((airport) => airport.id ===
+                  flight.airportfrom_id)?.airportname %>
+                </td>
+                <td>
+                  <%= airports.find((airport) => airport.id ===
+                  flight.airportto_id)?.airportname %>
+                </td>
+                <td><%= flight.date %></td>
+                <td class="d-flex gap-2" style="width: fit-content">
+                  <form
+                    class="needs-validation"
+                    style="width: fit-content"
+                    novalidate
+                    action="/flight/delete/<%= flight.id %>"
+                    method="post"
+                  >
+                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                      Delete
+                    </button>
+                  </form>
+                </td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+      integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      // Disable form submissions if there are invalid fields
+      (() => {
+        "use strict";
+
+        const forms = document.querySelectorAll(".needs-validation");
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach((form) => {
+          form.addEventListener(
+            "submit",
+            (event) => {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
+    </script>
+  </body>
+</html>

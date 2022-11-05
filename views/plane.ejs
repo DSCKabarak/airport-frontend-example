@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Planes</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body>
+    <div>
+      <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">
+            <img
+              src="https://cdn.dribbble.com/users/60166/screenshots/10872300/media/ba277eb11fa7c7b2e3014d0f9a0ada71.jpeg"
+              alt="Logo"
+              width="40"
+              height="32"
+              class="d-inline-block align-text-top"
+            />
+            Flight Planner
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div
+            class="collapse navbar-collapse justify-content-end"
+            id="navbarNavAltMarkup"
+          >
+            <div
+              class="navbar-nav align-items-center"
+              style="width: fit-content"
+            >
+              <a class="nav-link" href="/airport">Airports</a>
+              <a class="nav-link active" href="/plane">Planes</a>
+              <a class="nav-link" href="/flight">Flights</a>
+              <a class="btn btn-sm btn-outline-secondary" href="/login"
+                >Login</a
+              >
+            </div>
+          </div>
+        </div>
+      </nav>
+      <main class="container-fluid">
+        <div class="container-fluid mb-5">
+          <!-- Button trigger modal -->
+          <button
+            type="button"
+            class="btn btn-primary mt-4"
+            data-bs-toggle="modal"
+            data-bs-target="#add-plane"
+          >
+            Add Plane
+          </button>
+
+          <div
+            class="modal fade"
+            id="add-plane"
+            tabindex="-1"
+            aria-labelledby="addplaneLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <form
+                class="needs-validation"
+                novalidate
+                action="/plane"
+                method="POST"
+              >
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                      Add Plane
+                    </h1>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="mb-3">
+                      <label for="airportcode" class="form-label">Make</label>
+                      <input
+                        type="text"
+                        name="make"
+                        class="form-control"
+                        id="make"
+                        required
+                      />
+                      <div class="invalid-feedback">Please Provide Make!</div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="airportcode" class="form-label">Model</label>
+                      <input
+                        type="text"
+                        name="model"
+                        class="form-control"
+                        id="model"
+                        required
+                      />
+                      <div class="invalid-feedback">Please Provide Model!</div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="airportname" class="form-label">Year</label>
+                      <input
+                        type="number"
+                        name="year"
+                        class="form-control"
+                        id="year"
+                        required
+                      />
+                      <div class="invalid-feedback">Please Provide Year!</div>
+                    </div>
+                    <div class="mb-4">
+                      <label for="country" class="form-label">Capacity</label>
+                      <input
+                        type="number"
+                        name="capacity"
+                        class="form-control"
+                        id="capacity"
+                        required
+                      />
+                      <div class="invalid-feedback">
+                        Please Provide Capacity!
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid">
+          <h5 class="mb-4">Planes</h5>
+          <table class="table table-hover">
+            <thead class="table-light">
+              <tr>
+                <th scope="col">#</th>
+
+                <th scope="col">Make</th>
+                <th scope="col">Model</th>
+                <th scope="col">Year</th>
+                <th scope="col">Capacity</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% planes.forEach(function(plane){ %>
+              <tr>
+                <th scope="row"><%= plane.id %></th>
+                <td><%= plane.make %></td>
+                <td><%= plane.model %></td>
+                <td><%= plane.year %></td>
+                <td><%= plane.capacity %></td>
+                <td class="d-flex gap-2" style="width: fit-content">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#editModal-<%= plane.id %>"
+                  >
+                    Edit
+                  </button>
+
+                  <div
+                    class="modal fade"
+                    id="editModal-<%= plane.id %>"
+                    tabindex="-1"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog modal-dialog-centered">
+                      <form
+                        class="needs-validation"
+                        novalidate
+                        action="/plane/update/<%= plane.id %>"
+                        method="POST"
+                      >
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">
+                              Edit Plane
+                            </h1>
+                            <button
+                              type="button"
+                              class="btn-close"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
+                            ></button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="mb-3">
+                              <label for="airportcode" class="form-label"
+                                >Make</label
+                              >
+                              <input
+                                type="text"
+                                name="make"
+                                class="form-control"
+                                id="make"
+                                value="<%= plane.make %>"
+                                required
+                              />
+                              <div class="invalid-feedback">
+                                Please Provide Make!
+                              </div>
+                            </div>
+                            <div class="mb-3">
+                              <label for="airportcode" class="form-label"
+                                >Model</label
+                              >
+                              <input
+                                type="text"
+                                name="model"
+                                class="form-control"
+                                id="model"
+                                value="<%= plane.model %>"
+                                required
+                              />
+                              <div class="invalid-feedback">
+                                Please Provide Model!
+                              </div>
+                            </div>
+                            <div class="mb-3">
+                              <label for="airportname" class="form-label"
+                                >Year</label
+                              >
+                              <input
+                                type="number"
+                                name="year"
+                                class="form-control"
+                                id="year"
+                                value="<%= plane.year %>"
+                                required
+                              />
+                              <div class="invalid-feedback">
+                                Please Provide Year!
+                              </div>
+                            </div>
+                            <div class="mb-4">
+                              <label for="country" class="form-label"
+                                >Capacity</label
+                              >
+                              <input
+                                type="number"
+                                name="capacity"
+                                class="form-control"
+                                id="capacity"
+                                value="<%= plane.capacity %>"
+                                required
+                              />
+                              <div class="invalid-feedback">
+                                Please Provide Capacity!
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button
+                              type="button"
+                              class="btn btn-secondary"
+                              data-bs-dismiss="modal"
+                            >
+                              Close
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                              Save
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+
+                  <form
+                    class="needs-validation"
+                    style="width: fit-content"
+                    novalidate
+                    action="/plane/delete/<%= plane.id %>"
+                    method="post"
+                  >
+                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                      Delete
+                    </button>
+                  </form>
+                  <a
+                    class="btn btn-sm btn-outline-primary"
+                    href="/plane/id/<%= plane.id %>"
+                    >Open</a
+                  >
+                </td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+      integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      // Disable form submissions if there are invalid fields
+      (() => {
+        "use strict";
+
+        const forms = document.querySelectorAll(".needs-validation");
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach((form) => {
+          form.addEventListener(
+            "submit",
+            (event) => {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
+    </script>
+  </body>
+</html>
